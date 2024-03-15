@@ -2,19 +2,20 @@ from Cryptodome.Hash import SHA256
 import json
 import jsonpickle
 
-class BlockhainUtils():
+
+class BlockchainUtils():
 
     @staticmethod
     def hash(data):
         dataString = json.dumps(data)
         dataBytes = dataString.encode('utf-8')
-        datahash = SHA256.new(dataBytes)
-        return datahash
-    
+        dataHash = SHA256.new(dataBytes)
+        return dataHash
+
     @staticmethod
     def encode(objectToEncode):
-        return jsonpickle.encode(objectToEncode, unpicklable = True)
-    
+        return jsonpickle.encode(objectToEncode, unpicklable=True)
+
     @staticmethod
     def decode(encodedObject):
         return jsonpickle.decode(encodedObject)

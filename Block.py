@@ -1,16 +1,16 @@
 import time
 import copy
 
+
 class Block():
-    #forger is publicKeyString for block
-    def __init__ (self, transactions, lastHash, forger, blockCount):
+
+    def __init__(self, transactions, lastHash, forger, blockCount):
+        self.blockCount = blockCount
         self.transactions = transactions
         self.lastHash = lastHash
-        self.forger = forger
-        self.blockCount = blockCount
         self.timestamp = time.time()
+        self.forger = forger
         self.signature = ''
-
 
     @staticmethod
     def genesis():
@@ -20,21 +20,21 @@ class Block():
 
     def toJson(self):
         data = {}
-        data['lastHash'] = self.lastHash
-        data['forger'] = self.forger
         data['blockCount'] = self.blockCount
-        data['timestamp'] = self.timestamp
+        data['lastHash'] = self.lastHash
         data['signature'] = self.signature
+        data['forger'] = self.forger
+        data['timestamp'] = self.timestamp
         jsonTransactions = []
         for transaction in self.transactions:
             jsonTransactions.append(transaction.toJson())
-        data['transactions'] =jsonTransactions
+        data['transactions'] = jsonTransactions
         return data
-    
-    def sign(self, signature):
-        self.signature = signature
 
     def payload(self):
         jsonRepresentation = copy.deepcopy(self.toJson())
         jsonRepresentation['signature'] = ''
         return jsonRepresentation
+
+    def sign(self, signature):
+        self.signature = signature
